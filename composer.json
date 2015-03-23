@@ -1,0 +1,53 @@
+{
+    "name": "Gif2App",
+    "description": "Make your gif come true!",
+    "keywords": ["laravel", "Gif2App", "Gif", "Wordpress", "App"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dominykas Vilimas",
+            "homepage": "http://www.gif2app.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "~4.2",
+        "zizaco/confide": "~4.0",
+        "zizaco/entrust": "1.2.*",
+        "bllim/datatables": "~1.3",
+        "cmgmyr/messenger": "~1.0"
+    },
+    "require-dev": {
+        "way/generators": "~2.6",
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9",
+        "summerstreet/woodling": "~0.1.6",
+        "barryvdh/laravel-ide-helper": "~1.11"
+    },
+    "autoload": {
+        "classmap": [
+            "app/commands",
+            "app/controllers",
+            "app/library",
+            "app/models",
+            "app/database/migrations",
+            "app/database/seeds",
+            "app/tests/library"
+        ],
+        "psr-0": {
+            "Acme": "app/"
+        }
+    },
+    "scripts": {
+        "pre-update-cmd": [
+            "php artisan clear-compiled",
+            "php artisan ide-helper:generate",
+            "php artisan optimize"
+        ],
+        "post-install-cmd": [
+            "php artisan optimize"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
