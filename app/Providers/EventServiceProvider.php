@@ -11,22 +11,20 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-		'event.name' => [
-			'EventListener',
-		],
+		'auth.login' => ['App\Services\Statut@setLoginStatut'],
+		'auth.logout' => ['App\Services\Statut@setVisitorStatut'],
+		'user.access' => ['App\Services\Statut@setStatut']
 	];
 
 	/**
 	 * Register any other events for your application.
 	 *
-	 * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+	 * @param \Illuminate\Contracts\Events\Dispatcher $events
 	 * @return void
 	 */
 	public function boot(DispatcherContract $events)
 	{
 		parent::boot($events);
-
-		//
 	}
 
 }

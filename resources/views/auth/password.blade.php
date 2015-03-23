@@ -1,50 +1,32 @@
-@extends('app')
+@extends('front.template')
 
-@section('content')
-<div class="container-fluid">
+@section('main')
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Reset Password</div>
-				<div class="panel-body">
-					@if (session('status'))
-						<div class="alert alert-success">
-							{{ session('status') }}
-						</div>
-					@endif
+		<div class="box">
+			<div class="col-lg-12">
+				@if(session()->has('status'))
+      				@include('partials/error', ['type' => 'success', 'message' => session('status')])
+				@endif
+				@if(session()->has('error'))
+					@include('partials/error', ['type' => 'danger', 'message' => session('error')])
+				@endif	
+				<hr>	
+				<h2 class="intro-text text-center">{{ trans('front/password.title') }}</h2>
+				<hr>
+				<p>{{ trans('front/password.info') }}</p>		
+				{!! Form::open(['url' => 'password/email', 'method' => 'post', 'role' => 'form']) !!}	
 
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+					<div class="row">
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						{!! Form::control('email', 6, 'email', $errors, trans('front/password.email')) !!}
+						{!! Form::submit(trans('front/form.send'), ['col-lg-12']) !!}
+						{!! Form::text('address', '', ['class' => 'hpet']) !!}	
+						
+					</div>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
+				{!! Form::close() !!}
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Send Password Reset Link
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
 			</div>
 		</div>
 	</div>
-</div>
-@endsection
+@stop
