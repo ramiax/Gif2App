@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="utf-8">
-	</head>
-	<body>
-		<h2>{{ $title }}</h2>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<h2>Password Reset</h2>
 
-		<div>
-			{!! $intro . link_to('password/reset/' . $token, $link) !!}.<br>
-			{{ $expire . config('auth.reminder.expire', 60) . $minutes}}.
-		</div>
-	</body>
+	<div>
+		To reset your password, complete this form: {{ url('password/reset',
+		[$token]) }}.<br /> This link will expire in {{
+		config('auth.reminder.expire', 60) }} minutes.
+	</div>
+</body>
 </html>

@@ -13,7 +13,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG'),
+	'debug' => env('APP_DEBUG', false),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', 'YourSecretKey!!!'),
+	'key' => env('APP_KEY', 'SomeRandomString'),
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -91,7 +91,7 @@ return [
 	| the box, Laravel uses the Monolog PHP logging library. This gives
 	| you a variety of powerful log handlers / formatters to utilize.
 	|
-	| Available Settings: "single", "daily", "syslog"
+	| Available Settings: "single", "daily", "syslog", "errorlog"
 	|
 	*/
 
@@ -136,14 +136,24 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
+		'Illuminate\Html\HtmlServiceProvider',
+
+		/*
+		 * 3rd Party Service Providers...
+		 */
+		'yajra\Datatables\DatatablesServiceProvider',
+		'Laracasts\Generators\GeneratorsServiceProvider',
+		'Laracasts\Flash\FlashServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider',
+
 		/*
 		 * Application Service Providers...
 		 */
 		'App\Providers\AppServiceProvider',
 		'App\Providers\BusServiceProvider',
+		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
-		'App\Services\Html\HtmlServiceProvider',
 
 	],
 
@@ -175,6 +185,7 @@ return [
 		'File'      => 'Illuminate\Support\Facades\File',
 		'Hash'      => 'Illuminate\Support\Facades\Hash',
 		'Input'     => 'Illuminate\Support\Facades\Input',
+		'Inspiring' => 'Illuminate\Foundation\Inspiring',
 		'Lang'      => 'Illuminate\Support\Facades\Lang',
 		'Log'       => 'Illuminate\Support\Facades\Log',
 		'Mail'      => 'Illuminate\Support\Facades\Mail',
@@ -191,8 +202,16 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
-		'Form'		=> 'Collective\Html\FormFacade',
-		'HTML'		=> 'Collective\Html\HtmlFacade',
+
+		'Form'      => 'Illuminate\Html\FormFacade',
+		'HTML'      => 'Illuminate\Html\HtmlFacade',
+
+		/*
+		 * 3rd Party Aliases...
+		 */
+		'Datatables'  => 'yajra\Datatables\Datatables',
+		'Flash' => 'laracasts/Flash/Flash',
+		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
 	],
 

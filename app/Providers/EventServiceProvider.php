@@ -1,5 +1,9 @@
 <?php namespace App\Providers;
 
+use App\Events\UserWasDeleted;
+use App\Handlers\Events\DeleteUserGeneratedContent;
+use App\User;
+
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -11,20 +15,28 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-		'auth.login' => ['App\Services\Statut@setLoginStatut'],
-		'auth.logout' => ['App\Services\Statut@setVisitorStatut'],
-		'user.access' => ['App\Services\Statut@setStatut']
+		'event.name' => [
+			'EventListener',
+		],
+		UserWasDeleted::class => [
+			DeleteUserGeneratedContent::class,
+		],
 	];
 
 	/**
 	 * Register any other events for your application.
 	 *
-	 * @param \Illuminate\Contracts\Events\Dispatcher $events
+	 * @param  \Illuminate\Contracts\Events\Dispatcher  $events
 	 * @return void
 	 */
 	public function boot(DispatcherContract $events)
 	{
 		parent::boot($events);
+
+		User::deleting(function($user)
+		{
+			 \Event::fire(new UserWasDeleted($user->id));
+		});
 	}
 
 }

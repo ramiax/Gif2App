@@ -2,7 +2,6 @@
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler {
 
@@ -11,9 +10,9 @@ class Handler extends ExceptionHandler {
 	 *
 	 * @var array
 	 */
-	 protected $dontReport = [
-	 	'Symfony\Component\HttpKernel\Exception\HttpException'
-	 ];
+	protected $dontReport = [
+		'Symfony\Component\HttpKernel\Exception\HttpException'
+	];
 
 	/**
 	 * Report or log an exception.
@@ -37,11 +36,14 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-		if($e instanceof ModelNotFoundException)
+		if ($this->isHttpException($e))
 		{
-			abort(404);
+			return $this->renderHttpException($e);
 		}
-		return parent::render($request, $e);
+		else
+		{
+			return parent::render($request, $e);
+		}
 	}
 
 }
